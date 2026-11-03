@@ -43,3 +43,44 @@ But IP connectivity also brought new security problems. Some PBX systems gained 
 This connects to the H1 scientific review, *Telecom spam and scams in the 5G and artificial intelligence era* (Pietri et al., 2025), which discusses security weaknesses and fraud in modern telecommunications. The same general problem appears in the refrigerator attack: equipment built for a specific physical task becomes connected to IP networks, but security does not always keep up. In my opinion, we need to protect not only servers and computers but also PBXs, cameras, refrigerators, smart kettles and any other network-connected devices.
 
 **H1 article:** https://doi.org/10.1007/s10207-025-01062-8
+
+
+## d) Download Debian
+
+Downloaded Debian 13.7 (Trixie) Live Xfce amd64 from the official Debian website.
+
+## e) Bonus: Install Debian on a Virtual Machine
+
+Installed Debian 13.7 with Xfce in Oracle VirtualBox on Windows 10.
+
+VM configuration:
+- RAM: 3072 MB
+- CPUs: 2
+- Virtual disk: 30 GB
+- Network: NAT
+
+I also installed VirtualBox Guest Additions to enable shared clipboard support.
+
+### Verification
+
+```console
+$ cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+VERSION_ID="13"
+DEBIAN_VERSION_FULL=13.7
+
+$ uname -a
+Linux anna-virtualbox 6.12.115+deb13.1-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.12.115-2 (2026-11-01) x86_64 GNU/Linux
+
+$ systemd-detect-virt
+oracle
+
+$ lsblk -o NAME,SIZE,TYPE,MOUNTPOINTS
+NAME    SIZE TYPE MOUNTPOINTS
+sda      30G disk
+├─sda1  300M part /boot/efi
+├─sda2 23,3G part /
+└─sda3  6,4G part [SWAP]
+sr0    50,7M rom
+```
+
