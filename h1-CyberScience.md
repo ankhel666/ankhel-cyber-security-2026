@@ -1,4 +1,4 @@
-# H1 — CyberScience
+# H1 - CyberScience
 
 ## Introduction
 
