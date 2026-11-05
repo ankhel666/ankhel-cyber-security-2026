@@ -12,7 +12,7 @@ However, there were a few differences:
 
 - I allocated 3 GB of RAM instead of the recommended 4 GB because my host computer has only 16 GB, and I wanted to avoid allocating too much memory to the virtual machine.
 - I had to enable AMD-V in my computer's BIOS because it was disabled. The article mentions this requirement, but in my case, it was an actual problem that prevented the virtual machine from starting.
-- I also installed VirtualBox Guest Additions to enable the shared clipboard between Windows and Debian. This step was not covered in the article, and I encountered some additional problems during the installation, as described in section b).
+- I also installed VirtualBox Guest Additions to enable the shared clipboard between Windows and Debian. This step was not covered in the article, and I encountered some additional problems during the installation, as described in section 3).
 
 My main takeaway is that installing Linux in a virtual machine is quite straightforward, but hardware settings and integration between the host and guest systems can require additional troubleshooting.
 
@@ -219,7 +219,7 @@ The objective was to crack the example hash provided in the assignment:
 
 I followed the instructions from Karvinen's article *Cracking Passwords with Hashcat*.
 
-The experiment was performed in my Debian 13.7 virtual machine running in Oracle VirtualBox, as described in section b).
+The experiment was performed in my Debian 13.7 virtual machine running in Oracle VirtualBox, as described in section 3).
 
 ### Installing the required tools
 
@@ -261,6 +261,10 @@ cd hashed
 ![Working directory creation](images/mkdir-hashed.PNG)
 
 Before continuing, I also installed `vim`, since I prefer it over `nano`.
+
+```bash
+sudo apt install vim
+```
 
 I configured two aliases directly in my `~/.bashrc` file:
 
@@ -473,12 +477,458 @@ I did not encounter any errors during the actual Hashcat experiment. The additio
 
 The most important lesson for me was the practical difference between hashing and password security. Although a hash cannot simply be reversed, an attacker can still recover a weak password by hashing likely candidates and comparing the results.
 
+
+## 5) Voluntary Bonus — John the Ripper Jumbo
+
+Before starting this exercise, I slightly customized my Bash prompt again to make it more convenient. I shortened the displayed hostname to `vm`, while keeping the full directory path and current time. This explains why the prompt looks a little different in the following screenshots.
+
+For this exercise, I followed the tutorial [Crack File Password With John](https://terokarvinen.com/2023/crack-file-password-with-john/) by Tero Karvinen (2023).
+
+The objective was to install John the Ripper Jumbo, extract a password hash from an encrypted ZIP archive, and recover the password.
+
+### Installing dependencies
+
+I started by installing the dependencies required to build John the Ripper Jumbo from source:
+
+```bash
+sudo apt install -y git build-essential libssl-dev zlib1g-dev libbz2-dev atool zip unzip wget pkg-config
+```
+
+I did not run `apt update` again because I had already updated the package lists earlier during the Hashcat exercise.
+
+Some packages, including `build-essential`, `unzip`, and `wget`, were already installed.
+
+APT reported that 15 additional packages would be installed.
+
+![Installing John dependencies](images/jrj-1.PNG)
+
+The installation completed successfully without errors.
+
+![Dependencies installed](images/jrj-2.PNG)
+
+### Downloading John the Ripper Jumbo
+
+I downloaded the source code from the official Openwall GitHub repository:
+
+```bash
+cd ~
+git clone https://github.com/openwall/john.git
+```
+
+The repository was cloned successfully.
+
+![Cloning John the Ripper](images/jrj-3.PNG)
+
+I entered the project directory and checked its status:
+
+```bash
+cd ~/john
+git status
+ll
+```
+
+Git reported that the current branch was `bleeding-jumbo` and the working tree was clean.
+
+The repository contained the expected `src` and `run` directories.
+
+![Checking John repository](images/jrj-4.PNG)
+
+### Compiling John the Ripper Jumbo
+
+I changed to the source directory and ran the configuration script:
+
+```bash
+cd ~/john/src
+./configure
+```
+
+The script checked the compiler, libraries, and available CPU features.
+
+![John configuration](images/jrj-5.PNG)
+
+After configuration, I compiled the program:
+
+```bash
+make -j2
+```
+
+I used `-j2` because my Debian virtual machine has two virtual CPUs.
+
+The compilation completed successfully:
+
+```text
+Make process completed.
+```
+
+![John compilation completed](images/jrj-6.PNG)
+
+To verify the installation, I ran:
+
+```bash
+cd ~/john/run
+./john --list=build-info
+```
+
+The output included:
+
+```text
+Version: 1.9.0-jumbo-1+bleeding
+Build: linux-gnu 64-bit x86_64 AVX AC OMP
+SIMD: AVX
+AES hardware acceleration: AES-NI
+```
+
+This confirmed that John the Ripper Jumbo was compiled and could run on my system.
+
+![John build information](images/jrj-7.PNG)
+
+### Downloading and testing the encrypted ZIP
+
+I created a separate working directory:
+
+```bash
+mkdir -p ~/john-lab
+cd ~/john-lab
+```
+
+Then I downloaded the example ZIP archive provided in the article:
+
+```bash
+wget https://terokarvinen.com/2023/crack-file-password-with-john/tero.zip
+```
+
+The archive was downloaded successfully and had a size of 543 bytes.
+
+I tried extracting it:
+
+```bash
+unzip tero.zip
+```
+
+The archive requested a password for `secretFiles/SECRET.md`.
+
+I entered an incorrect password, and the extraction failed:
+
+```text
+skipping: secretFiles/SECRET.md incorrect password
+```
+
+![Downloading and testing the ZIP archive](images/jrj-8.PNG)
+
+This confirmed that the file inside the ZIP archive was protected by a password.
+
+### Extracting the ZIP hash
+
+Next, I used `zip2john` to extract the information required for password cracking:
+
+```bash
+~/john/run/zip2john tero.zip > tero.hash
+```
+
+I checked the resulting file:
+
+```bash
+ll tero.hash
+head tero.hash
+```
+
+The file was 494 bytes and contained a hash in the `$pkzip$` format.
+
+The tool also reported that the directory entry `secretFiles/` was not encrypted. This was normal because the actual protected content was the file `SECRET.md`.
+
+![Extracting the ZIP hash](images/jrj-9.PNG)
+
+### Cracking the ZIP password
+
+I started John the Ripper:
+
+```bash
+~/john/run/john tero.hash
+```
+
+John recognized the PKZIP format and used two OpenMP threads.
+
+The password was recovered almost immediately:
+
+```text
+butterfly        (tero.zip/secretFiles/SECRET.md)
+Session completed
+```
+
+![John successfully cracked the ZIP password](images/jrj-10.PNG)
+
+I verified the result:
+
+```bash
+~/john/run/john --show tero.hash
+```
+
+The output confirmed:
+
+```text
+1 password hash cracked, 0 left
+```
+
+The recovered password was `butterfly`.
+
+![Verifying the recovered ZIP password](images/jrj-11.PNG)
+
+### Verifying the password by extracting the archive
+
+Finally, I tested the recovered password against the actual ZIP archive:
+
+```bash
+unzip tero.zip
+```
+
+When prompted, I entered `butterfly`.
+
+The archive was extracted successfully.
+
+I checked the extracted file:
+
+```bash
+ll secretFiles/
+cat secretFiles/SECRET.md
+```
+
+The file contained:
+
+```text
+You've found the secret, well done!
+
+You have now completed the tutorial.
+```
+
+![Successfully extracting the protected ZIP file](images/jrj-12.PNG)
+
+### Conclusion
+
+I successfully installed John the Ripper Jumbo from source, extracted a PKZIP hash, recovered the password, and verified it by opening the encrypted archive.
+
+The exercise demonstrated how John the Ripper can recover passwords from encrypted archives after extracting the required hash data with tools such as `zip2john`.
+
+I did not encounter any major problems during the installation, compilation, or ZIP cracking process.
+
 ---
+
+## 6) Voluntary Bonus — The Other John
+
+For this bonus exercise, I continued using John the Ripper Jumbo installed in the previous task.
+
+The objective was to create my own encrypted file in a format other than ZIP and attempt to recover its password.
+
+I decided to use a **7z archive**, which supports AES-256 encryption.
+
+Unlike the previous exercise, I used my own password containing uppercase letters, lowercase letters, and numbers. It was not a dictionary word.
+
+### Checking 7-Zip installation
+
+I started by checking whether 7-Zip was installed:
+
+```bash
+sudo apt install -y 7zip
+```
+
+APT reported that the package was already installed.
+
+I checked the version:
+
+```bash
+7z | head -n 5
+```
+
+The output showed:
+
+```text
+7-Zip 25.01 (x64)
+```
+
+![Checking 7-Zip installation](images/jrj-13.PNG)
+
+### Creating an encrypted 7z archive
+
+I created a separate working directory:
+
+```bash
+mkdir -p ~/john-lab/7z-test
+cd ~/john-lab/7z-test
+```
+
+I created a small text file named `secretfile`.
+
+My first attempt to create an encrypted archive used:
+
+```bash
+7z a -t7z -mhe=on secret.7z secretfile
+```
+
+However, 7-Zip did not request a password.
+
+I realized that `-mhe=on` controls header encryption, but does not enable password protection on its own. I needed to add the `-p` option.
+
+I deleted the archive and corrected the command:
+
+```bash
+rm secret.7z
+7z a -t7z -mhe=on -p secret.7z secretfile
+```
+
+This time 7-Zip requested a password, and the archive was created successfully:
+
+```text
+Everything is Ok
+```
+
+To verify the protection, I tried listing the archive contents:
+
+```bash
+7z l secret.7z
+```
+
+I entered an incorrect password, and 7-Zip displayed:
+
+```text
+ERROR: secret.7z : Cannot open encrypted archive. Wrong password?
+Headers Error
+```
+
+![Creating and testing the encrypted 7z archive](images/jrj-14.PNG)
+
+This confirmed that the archive was encrypted and that its contents could not be listed without the correct password.
+
+### Extracting the 7z hash
+
+I checked whether the `7z2john.pl` utility was available:
+
+```bash
+ls -l ~/john/run/7z2john.pl
+```
+
+Then I attempted to extract the hash:
+
+```bash
+perl ~/john/run/7z2john.pl secret.7z > secret.hash
+```
+
+However, the command failed:
+
+```text
+Can't locate Compress/Raw/Lzma.pm in @INC
+BEGIN failed--compilation aborted
+```
+
+The required Perl module `Compress::Raw::Lzma` was missing.
+
+![Missing Perl module error](images/jrj-15.PNG)
+
+### Fixing the missing Perl module
+
+I installed the missing dependency:
+
+```bash
+sudo apt install -y libcompress-raw-lzma-perl
+```
+
+Then I repeated the hash extraction:
+
+```bash
+perl ~/john/run/7z2john.pl secret.7z > secret.hash
+```
+
+This time the command completed successfully.
+
+I checked the output:
+
+```bash
+ll secret.hash
+head secret.hash
+```
+
+The resulting file was 334 bytes and contained data beginning with the `$7z$` marker.
+
+![Successfully extracting the 7z hash](images/jrj-16.PNG)
+
+The utility also displayed a warning that extracted hashes may contain sensitive encrypted data.
+
+Since I was using my own test file, this did not create a confidentiality issue, but it was a useful reminder that hashes extracted from real encrypted documents should be handled carefully.
+
+### Attempting to crack the password
+
+I started John the Ripper using the extracted hash:
+
+```bash
+~/john/run/john secret.hash
+```
+
+Unlike the previous ZIP exercise, John did not recover the password immediately.
+
+I wanted to see how much CPU and memory the process was using, so I opened another terminal and ran:
+
+```bash
+top
+```
+
+John was using approximately 179% CPU, meaning it was utilizing almost both virtual CPU cores.
+
+Its memory usage was only around 1.9% of the VM's RAM, approximately 57 MiB.
+
+![John the Ripper resource usage](images/jrj-17.PNG)
+
+The password cracking speed was surprisingly slow, approximately **7–8 candidates per second**.
+
+This is because 7z uses a computationally expensive key derivation process based on repeated SHA-256 calculations. For each password candidate, John has to derive an encryption key and test it against the encrypted archive.
+
+This makes password guessing much slower than testing a simple MD5 hash.
+
+### Stopping the unsuccessful cracking attempt
+
+I allowed John to continue for approximately 7.5 minutes.
+
+During this time, it reached about 37% of its first cracking stage, but did not recover the password.
+
+The speed remained around 7.4 passwords per second.
+
+Since my password was not a dictionary word and included uppercase and lowercase letters and numbers, I decided not to continue waiting for an unknown amount of time.
+
+I stopped John manually.
+
+The output ended with:
+
+```text
+Session aborted
+```
+
+![John the Ripper stopped without finding the password](images/jrj-18.PNG)
+
+The reported progress referred only to the first cracking stage, not to the entire password search space.
+
+### Conclusion
+
+Although John the Ripper successfully extracted the hash from my encrypted 7z archive, it did not recover the password during the time I allowed it to run.
+
+My main observations were:
+
+- Password cracking speed depends heavily on the encryption and key derivation methods used.
+- The 7z archive was considerably more computationally expensive to attack than the MD5 hash used in H3(c).
+- John used almost both virtual CPU cores while testing only around 7–8 password candidates per second.
+- A password that is not present among the generated candidates may require much more time and a different attack strategy.
+- Successfully extracting a hash does not guarantee that the original password can be recovered within a practical amount of time.
+
+I deliberately stopped the experiment rather than continue an open-ended brute-force attempt.
+
+This was an interesting contrast with the previous exercises, where Hashcat quickly recovered `summer` from an MD5 hash and John the Ripper recovered `butterfly` from the provided ZIP archive.
+
+The experiment helped me better understand why the choice of encryption format, password complexity, and computational cost are important for protecting encrypted data.
+
+---
+
 
 ## References
 
-1. Heinonen, J. (2026). *How to Install Linux to Virtualbox?*
+1. Heinonen, J. (2026). [How to Install Linux to Virtualbox?](https://github.com/johannaheinonen/johanna-test-repo/blob/main/module_1.md).
 2. Karvinen, T. (2020). [Command Line Basics Revisited](https://terokarvinen.com/2020/command-line-basics-revisited/).
 3. Karvinen, T. (2022). [Cracking Passwords with Hashcat](https://terokarvinen.com/2022/cracking-passwords-with-hashcat/).
 4. [Hashcat — Official Website](https://hashcat.net/hashcat/).
 5. [SecLists — GitHub Repository](https://github.com/danielmiessler/SecLists).
+6. Karvinen, T. (2023). [Crack File Password With John](https://terokarvinen.com/2023/crack-file-password-with-john/).
