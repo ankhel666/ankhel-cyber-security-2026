@@ -1,9 +1,9 @@
+
 ### x) Why use a feed reader (RSS/Atom)?
 
-Of course, I can open all these websites in my browser and check what is new. But if I follow several cybersecurity blogs, it takes quite a lot of time, and I can easily miss something interesting.
-RSS and Atom feeds allow me to get updates from different websites in one place. I don't need to check every website separately, and I can quickly see what has been published recently.
-Another useful thing, from my point of view, is the possibility to follow the same security topic from different sources. For example, one blog may describe an incident in general, while another gives more technical details. This helps to get a better picture of what actually happened.
-Of course, there are also some disadvantages. Too many feeds can produce a lot of information noise, and not everything is interesting or useful for me. Sometimes I still need to open the original article to understand the details.
+Of course, I can check cybersecurity websites manually, but with several sources it takes time, and I can easily miss something interesting.
+RSS and Atom collect updates in one place, so I can quickly see new publications and choose what is worth reading. It also makes comparing different sources easier.
+The disadvantage is information noise when there are too many feeds. Also, sometimes I still need to open the original article to understand the details.
 
 
 ### y) Finnish Supreme Court case KKO:2003:36
@@ -21,8 +21,7 @@ Usually, these hackers were teenagers, and the financial damage was small. With 
 But there was one more serious case involving [Alexander Morakhovsky](https://www.kommersant.ru/doc/561875), who used Trojans to steal internet credentials from customers of two St. Petersburg providers, Admiral Telecom and Cityline.
 The case went to the Krasnogvardeysky District Court in 2001. I actually attended the trial, and my husband was one of the witnesses. Morakhovsky was found guilty and sentenced to three years in prison and a fine of 300 minimum monthly wages, although he was released from imprisonment under an amnesty.
 I couldn't find the original court decision, but surprisingly, I found several newspaper articles about the case, even after more than 25 years.
-I think these two cases are quite interesting examples from the early days of cybersecurity. The laws already existed, but investigating such crimes and handling digital evidence were still relatively new challenges.
-And the main thing, from my point of view, is that young people sometimes see hacking as an interesting technical experiment or just a game. But even simple tools and actions can have quite serious consequences, both for victims and for the attackers themselves.
+I think these two cases are interesting examples from the early days of cybersecurity. Investigating such crimes and handling digital evidence were still relatively new challenges. What strikes me most is how simple technical experiments, sometimes treated almost like a game, can have serious consequences for both victims and attackers.
 
 **Sources:**
 
@@ -37,52 +36,50 @@ And the main thing, from my point of view, is that young people sometimes see ha
 I decided to use Mozilla Thunderbird as my RSS reader. I already knew Thunderbird as an email client, but I had never really used it for RSS feeds.
 On 8 November 2026, I downloaded and installed Thunderbird on my Windows computer from the [official website](https://www.thunderbird.net/).
 At first, Thunderbird wanted me to configure an email account and asked for IMAP or POP3 settings. But I didn't need email for this task, so I skipped that part and created a separate feed account called `Cybersecurity Feeds` using **File → New → Feed Account**.
-Then I added the RSS subscriptions and checked that Thunderbird could download and display articles. Everything worked without problems.
+Then I added four RSS/Atom subscriptions and checked that Thunderbird could download and display articles.
+
 ![RSS subscriptions in Thunderbird](images/rss_subscribed_1.PNG)
+
 
 ### b) Krebs on Security
 
 I added the required [Krebs on Security](https://krebsonsecurity.com/) feed:
 `https://krebsonsecurity.com/feed/`
-This blog focuses quite much on cybercrime, investigations, data breaches and real security incidents. I think it is a useful source because it doesn't only describe technical vulnerabilities, but also explains what happens in real life.
-The feed was added successfully, and I could see the latest articles in Thunderbird.
+Krebs writes about cybercrime, investigations, data breaches and real security incidents. I find it useful because the articles explain not only technical problems, but also their consequences in real life.
+
 
 ### c) Schneier on Security
 
 The second required source was [Schneier on Security](https://www.schneier.com/).
-I found its Atom feed:
-`https://www.schneier.com/feed/atom/`
-Bruce Schneier often writes about security from a wider point of view, including privacy, technology, politics and society.
-This is a bit different from reading only technical security news. Sometimes it is useful to think not only about how an attack works, but also about why it happens and what consequences it may have.
-The feed worked correctly in Thunderbird.
+Atom feed: `https://www.schneier.com/feed/atom/`
+Bruce Schneier looks at security from a wider perspective, including privacy, technology, politics and society. This gives a different view compared with purely technical cybersecurity news.
+
 
 ### d) Two additional cybersecurity feeds
 
-I wanted to choose two sources that would give me something different from Krebs and Schneier. I looked for established security resources and their RSS feeds.
+I wanted two additional sources with different perspectives, so I chose SANS Internet Storm Center for technical analysis and CISA for official security alerts. I checked their RSS feeds in Thunderbird.
 
 **SANS Internet Storm Center**
 
 Website: https://isc.sans.edu/
+
 Feed: `https://isc.sans.edu/rssfeed_full.xml`
-I was already familiar with SANS Internet Storm Center from our earlier cybersecurity assignments, where I listened to Stormcast episodes.
-I chose this source because I like practical technical analysis. SANS publishes information about attacks, vulnerabilities, suspicious network traffic and malware. Sometimes the articles include real logs, HTTP requests and other technical details, which are especially interesting for me because of my IT background.
-I found the feed on the SANS website and added the full-text RSS version.
+
+I was already familiar with SANS from our earlier assignments and Stormcast podcasts. Their diaries often contain real attack examples, logs, HTTP requests and malware analysis. This practical technical approach is especially interesting for me.
 
 **CISA — Cybersecurity Alerts**
 
 Website: https://www.cisa.gov/
 
 Feed: `https://www.cisa.gov/cybersecurity-advisories/alerts.xml`
-For the fourth source, I chose CISA, the US Cybersecurity and Infrastructure Security Agency.
-I wanted to have also an official security source, not only blogs and technical diaries. CISA publishes cybersecurity alerts and information about vulnerabilities that are known to be exploited.
-From my point of view, this is quite useful when thinking about which security problems should be handled first in a real IT environment.
-I located the cybersecurity alerts RSS feed and subscribed to it in Thunderbird.
-Both additional feeds worked correctly, and now I had four different security sources in one reader.
+
+I also wanted an official source. CISA publishes security alerts and information about exploited vulnerabilities, which is useful for prioritizing security problems in a real IT environment.
+Both feeds worked correctly, so I now had four different cybersecurity sources in Thunderbird.
 
 
 ### e) Following cybersecurity feeds
 
-I started following the four RSS feeds on 8 November 2026 and checked the new publications during the following days.
+I started following the four RSS feeds on 8 November 2026 and checked new publications during the following days.
 To make reading more convenient, I created a saved search folder in Thunderbird called `month`. It collects articles from all four feeds that are less than 30 days old. I sorted them by date, with the newest articles first.
 This gives me something like a **River of News**, where I can see publications from different sources in one list instead of opening each feed separately.
 
@@ -90,32 +87,26 @@ This gives me something like a **River of News**, where I can see publications f
 
 **What I found interesting**
 
-One good example was Microsoft Patch Tuesday in November 2026. Both Krebs on Security and SANS Internet Storm Center covered it, but their articles were quite different.
-Krebs explained the situation in a more general way, including the increasing number of vulnerabilities, already exploited problems and what administrators should prioritize.
-SANS provided much more technical information, including a long list of CVEs, severity ratings and affected products.
-I also noticed that the numbers were different: Krebs mentioned 1,093 vulnerabilities, while SANS reported 1,260. The SANS article included 167 Chromium vulnerabilities affecting Microsoft Edge, which seems to explain the difference in the totals.
-This was a good example of why I prefer to follow several sources. Even when they describe the same event, they may count things differently or focus on different details.
+One good example was **Microsoft Patch Tuesday in November 2026**. Both Krebs and SANS covered it, but differently. Krebs gave a general overview and discussed what administrators should prioritize, while SANS published detailed CVE lists, severity ratings and affected products.
+I also noticed different numbers: Krebs mentioned **1,093 vulnerabilities**, while SANS reported **1,260**. SANS included 167 Chromium vulnerabilities affecting Microsoft Edge, which may explain the difference. This was a good example of why checking more than one source is useful.
 Another article I paid attention to was the SANS report about **GPUStack authentication bypass (CVE-2026-102895)**. The vulnerability was caused by trusting the HTTP header `X-Gpustack-Real-IP`. By setting this header to `127.0.0.1`, an external attacker could make a vulnerable server treat the request as local and bypass authentication.
 What interested me was that the article included examples of actual suspicious HTTP requests. It is a rather simple technical mistake, but with serious consequences.
-
 I also read a SANS article about the **Macfinger ClickFix campaign and DownTheDRAIN infostealer for macOS**. In this case, users were tricked by a fake CAPTCHA page into executing a command in Terminal, which downloaded malicious software.
 This reminded me of the old Trojan attacks I encountered while working at a dial-up ISP. The technologies and targets have changed quite a lot, but stealing information by tricking users is still a very familiar problem.
+
 From Schneier on Security, I found the essay **"AI Doesn't Have to Go Rogue to Break the World"** interesting. Bruce Schneier discusses how AI can exploit weaknesses in systems even without malicious intentions, simply by finding unexpected ways to complete a task.
 This article was quite different from the technical reports on SANS, and I think this variety is one of the advantages of following several security sources.
 
 **Advantages and disadvantages of using RSS**
 
-For me, the main advantage is convenience. I can quickly look through many publications in one place, compare different sources and decide which articles I want to read more carefully.
-The River of News view is especially useful because I can notice when several sources write about the same event. It also helps me find technical details that I might miss if I read only one blog.
-But there are disadvantages as well. Some sources publish much more frequently than others, so the list can become quite noisy. Also, a feed reader does not automatically connect related articles or explain why different sources report different numbers. I still need to compare the information myself.
-Compared with browsing websites separately, RSS saves time. Compared with social media, it gives me a more controlled selection of sources without an algorithm deciding what I should see.
-I think I will continue using RSS for cybersecurity news, although I probably need to be selective about which articles I read in detail.
+The River of News was convenient for quickly reviewing different sources and deciding what to read in detail. I especially liked the possibility to notice the same incident in several publications.
+The main disadvantage was information noise. Some sources, especially SANS, publish quite frequently, and Thunderbird doesn't automatically group related articles. I still need to compare information myself.
+Compared with social media, I like that I choose the sources instead of relying on an algorithm. I think I will continue using RSS, but selectively.
 
 
 ### f) Port scanning localhost with Nmap
 
 For this task, I used my Debian 13 virtual machine in VirtualBox, which I had already prepared for previous cybersecurity assignments.
-
 I installed Nmap using APT and checked the installed version:
 
 ```bash
@@ -188,7 +179,6 @@ PORT    STATE SERVICE VERSION
 ```
 
 The other 999 scanned TCP ports were closed.
-
 Port 631 belongs to CUPS, the Linux printing system. I didn't expect to find a printing service in my VM, but it was already running. There was no HTTP server listening on port 80.
 
 ![Nmap scan before installing Apache2](images/nmap_before_apache.PNG)
@@ -249,15 +239,14 @@ Now 998 TCP ports were closed instead of 999.
 | 80/tcp closed | 80/tcp open — Apache2 |
 | 999 closed TCP ports | 998 closed TCP ports |
 
-The difference was quite clear. After installing Apache2, a new service became available on TCP port 80, and Nmap could identify the web server and its version.
-One thing I found interesting was that Nmap detected CUPS already during the first scan. It shows that even when I haven't installed any server application myself, there may be some network services running in the system.
-Also, I noticed that `-A` gives quite a lot of additional information, including HTTP page titles and server headers. It is useful for investigation, but not always necessary if I only want to see which ports are open.
-All scans were performed only against my own `localhost`, while the virtual machine was disconnected from the network.
+After installing Apache2, port 80 became open, and Nmap identified the web server and its version. I was also surprised to find CUPS already listening on port 631 before installing anything.
+
+The `-A` option provided additional details, such as HTTP headers and page titles, but it also produced quite a lot of output. All scans were performed only against my own `localhost`, with the VM disconnected from the network.
 
 
 ### g) Bonus: Detecting port scanning in Apache logs
 
-After installing Apache2 and scanning `localhost` with Nmap, I wanted to check if the web server noticed our scanning activity.
+After installing Apache2 and scanning `localhost` with Nmap, I wanted to check if the web server noticed the scanning activity.
 I started by checking the Apache access log:
 
 ```bash
@@ -271,7 +260,7 @@ The interesting part was the `User-Agent` field:
 Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)
 ```
 
-So Nmap was not even trying to hide itself. Its scripting engine identified itself directly in the HTTP requests.
+Nmap's scripting engine identified itself directly in the HTTP requests.
 I also noticed different requests made by Nmap, for example:
 
 ```text
@@ -290,9 +279,9 @@ sudo grep 'Nmap Scripting Engine' /var/log/apache2/access.log | tail -n 8
 
 ![Nmap requests detected in Apache access log](images/apache_nmap_logs.PNG)
 
-For me, this was a good practical example of how application logs can help to notice scanning activity. In this case, detection was quite easy because Nmap included its name in the HTTP `User-Agent`.
-However, Apache access logs contain HTTP requests, not all network packets. This means that a different type of port scan might not appear in these logs.
-I decided to test exactly this in the next bonus task.
+This was a practical example of detecting scanning activity through application logs. It was especially easy because the HTTP requests included `Nmap Scripting Engine` in the `User-Agent`.
+However, Apache access logs record HTTP requests, not all network packets. I wanted to check whether another type of scan would also appear there.
+
 
 ### h) Bonus: Scanning without detection by the previous method
 
@@ -331,8 +320,6 @@ Nmap done: 1 IP address (1 host up) scanned in 0.09 seconds
 
 ![TCP SYN scan of localhost port 80](images/nmap_syn_scan.PNG)
 
-Nmap successfully identified port 80 as open.
-
 Unlike the earlier `-A` scan, this command did not run HTTP NSE scripts or perform service version detection. A SYN scan determines whether the TCP port is open without completing a normal TCP connection and sending an HTTP request.
 
 After the scan, I checked the Apache access log again:
@@ -347,9 +334,6 @@ The result was still:
 29 /var/log/apache2/access.log
 ```
 
-So the number of log entries did not change. The SYN scan found the open port, but it did not generate any new entries in Apache's access log.
-This means my detection method from task g did not notice the new scan.
-Of course, this doesn't mean that a SYN scan is completely invisible. A firewall, IDS or network monitoring system could still detect the TCP packets. But Apache's HTTP access log was not enough to detect this particular scan.
-I think this was the most interesting part of the Nmap experiment. In task g, detecting the scan was very easy because Nmap identified itself in HTTP requests. But just changing the scanning method was enough to avoid that specific detection method.
-Both experiments were performed only against my own `localhost`, with the Debian virtual machine disconnected from the network.
-
+The log still contained 29 entries, so the SYN scan detected the open port without generating new HTTP access log records.
+This means the detection method from task g did not notice the new scan. Of course, it doesn't mean SYN scans are invisible. A firewall or IDS could still detect the packets, but Apache's HTTP access log was not enough.
+I found this comparison quite interesting: changing the scanning method was enough to avoid one specific detection method. Both tests were performed only against my own `localhost`, with the VM offline.
