@@ -1,5 +1,7 @@
 # h6 Mature
 
+*Done on 26.11.2026, about 2 hours. No technical tests on a computer, only the Kybermittari spreadsheet (v2.1) in Excel.*
+
 ## x) Read and summarize
 
 ### Traficom: Cybermeter User Guide
@@ -132,6 +134,8 @@ A prioritised list of 18 controls and 153 concrete safeguards, split into three 
 ### My comparison
 
 Kybermittari shows where you are and starts the discussion. CIS Controls helps decide what to do next on the technical side. ISO 27001 is the choice if you need certification, and NIST CSF is a flexible general framework. They don't really compete; they work well together.
+
+For Helsinki City Bus Services, CIS IG1 would help IT fix concrete things like the device inventory, but it would never have found the drivers' WhatsApp group. That only came out because the driver was in the room, which is where Kybermittari is stronger.
 
 ## References
 
